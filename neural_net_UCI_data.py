@@ -13,7 +13,7 @@ def parse_line(line: str) -> Tuple[List[float], List[float]]:
     """
     tokens = line.split(",")
     out = int(tokens[0])
-    output = [1 if out == 1 else 0.5 if out == 2 else 1]
+    output = [0 if out == 1 else 0.5 if out == 2 else 1]
 
     inpt = [float(x) for x in tokens[1:]]
     return (inpt, output)
@@ -48,6 +48,8 @@ def normalize(data: List[Tuple[List[float], List[float]]]):
 with open("wine_data.txt", "r") as f:
     training_data = [parse_line(line) for line in f.readlines() if len(line) > 4]
 
+# for line in training_data:
+#     print(line)
 td = normalize(training_data)
 
 nn = NeuralNet(13, 3, 1)

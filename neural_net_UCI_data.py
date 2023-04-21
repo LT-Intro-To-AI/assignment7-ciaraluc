@@ -1,6 +1,6 @@
 from typing import Tuple
 from neural import *
-
+from sklearn.model_selection import train_test_split
 
 def parse_line(line: str) -> Tuple[List[float], List[float]]:
     """Splits line of CSV into inputs and output (transormfing output as appropriate)
@@ -52,8 +52,10 @@ with open("wine_data.txt", "r") as f:
 #     print(line)
 td = normalize(training_data)
 
-nn = NeuralNet(13, 3, 1)
-nn.train(td, iters=100_000, print_interval=1000, learning_rate=0.1)
+train_data, test_data=train_test_split(td)
 
-for i in nn.test_with_expected(td):
+nn = NeuralNet(13, 3, 1)
+nn.train(train_data, iters=1000, print_interval=1000, learning_rate=0.1)
+
+for i in nn.test_with_expected(test_data):
     print(f"desired: {i[1]}, actual: {i[2]}")
